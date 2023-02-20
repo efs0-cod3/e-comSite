@@ -21,6 +21,7 @@
     "mongoose": "^6.9.2",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
-    "passport-auth0": "^1.4.3"
+    "passport-auth0": "^1.4.3",
+    "validator": "^13.9.0"
   }
 }

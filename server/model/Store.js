@@ -1,28 +1,24 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  username: {
+  storename: {
     type: String,
     required: true,
     unique: true
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
+  description: {
     type: String,
     required: true,
   },
-  store: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Store",
-  }
+    ref: "User",
+  },
+  product: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+  },
+  
 });
 
 UserSchema.set("toJSON", {
@@ -30,8 +26,6 @@ UserSchema.set("toJSON", {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
     delete returnedObject.__v;
-
-    delete returnedObject.password;
   },
 });
 
