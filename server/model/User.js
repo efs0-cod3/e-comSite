@@ -22,7 +22,14 @@ const UserSchema = new mongoose.Schema({
   store: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Store",
+  },
+  cart: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Cart",
   }
+},
+{
+  versionKey: false
 });
 
 UserSchema.set("toJSON", {

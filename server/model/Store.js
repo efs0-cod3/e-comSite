@@ -18,7 +18,9 @@ const UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
   },
-  
+},
+{
+  versionKey: false
 });
 
 UserSchema.set("toJSON", {

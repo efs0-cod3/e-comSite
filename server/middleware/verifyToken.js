@@ -5,8 +5,7 @@ const verifyToken = async (req,res,next) =>  {
    try {
      // nombramos el header del token
      const token = req.headers["x-access-token"]
-
-     console.log(token);
+     
      // verificamos la existencia del token y de no ser asi enviamos msj de error
      if(!token) {return res.status(403).json({message: "No token provided"})};
  
