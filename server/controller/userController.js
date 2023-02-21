@@ -1,7 +1,9 @@
 const User = require("../model/User");
+const Cart = require("../model/Cart");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 const jwt = require('jsonwebtoken')
+const cartCreate = require("../lib/cartInitialSetup")
 
 exports.createUser = async (req, res) => {
   const { name, username, email, pwd } = req.body;
@@ -44,10 +46,12 @@ exports.createUser = async (req, res) => {
       email,
       password: hashedpwd,
     });
+    user.cart = cartCreate(user.id)
 
     const token = jwt.sign({id: user.id}, process.env.SECRET,{
       expiresIn: 86400
     })
+
     res.status(201).json({ token });
 
   } catch (error) {
@@ -57,11 +61,10 @@ exports.createUser = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
   try {
-    const getUsers = await User.find({});
-    console.log(getUsers);
+    const getUsers = await User.find({}).populate('cart');
+    const getCarts= await Cart.find({}).populate('user',{password:0});
     res.status(302).json(getUsers);
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -71,7 +74,6 @@ exports.removeUser = async (req, res) => {
     const removeUser = await User.deleteOne({ id: req.body.id });  
     res.status(200).json({message: 'user deleted'});
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -88,6 +90,7 @@ exports.userLogin = async (req,res) => {
     const token = jwt.sign({id: foundUser.id}, process.env.SECRET,{
       expiresIn: 86400
     })
+
     return res.status(201).json({ token, message: "logged in" });
    } catch (error) {
     res.status(400).json({message: error})
