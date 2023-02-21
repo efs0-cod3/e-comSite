@@ -1,6 +1,7 @@
 const User = require("../model/User");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
+const jwt = require('jsonwebtoken')
 
 exports.createUser = async (req, res) => {
   const { name, username, email, pwd } = req.body;
@@ -37,14 +38,18 @@ exports.createUser = async (req, res) => {
     //encrypt pawd
     const hashedpwd = await bcrypt.hash(pwd, 10);
     //create and store new user
-    const result = await User.create({
+    const user = await User.create({
       name,
       username,
       email,
       password: hashedpwd,
     });
-    console.log(result);
-    res.status(201).json({ success: "saved" });
+
+    const token = jwt.sign({id: user.id}, process.env.SECRET,{
+      expiresIn: 86400
+    })
+    res.status(201).json({ token });
+
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -54,7 +59,7 @@ exports.getUsers = async (req, res) => {
   try {
     const getUsers = await User.find({});
     console.log(getUsers);
-    res.status(201).json(getUsers);
+    res.status(302).json(getUsers);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
@@ -63,11 +68,28 @@ exports.getUsers = async (req, res) => {
 
 exports.removeUser = async (req, res) => {
   try {
-    const removeUser = await User.deleteOne({ id: req.body.id });
-    console.log(removeUser);
-    res.status(201).json(removeUser);
+    const removeUser = await User.deleteOne({ id: req.body.id });  
+    res.status(200).json({message: 'user deleted'});
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.userLogin = async (req,res) => {
+  try {
+    // checks if email exist
+     const foundUser = await User.findOne({email: req.body.email})
+     if (!foundUser) { return res.status(400).json({message: "wrong email or password"})}
+    // checks pwd if matches with hash
+    const match = await bcrypt.compare(req.body.password, foundUser.password)
+    if (!match) { return res.status(400).json({token: "null" , message: "wrong email or password"}) }
+
+    const token = jwt.sign({id: foundUser.id}, process.env.SECRET,{
+      expiresIn: 86400
+    })
+    return res.status(201).json({ token, message: "logged in" });
+   } catch (error) {
+    res.status(400).json({message: error})
+   }
+}
