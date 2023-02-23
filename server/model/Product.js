@@ -10,12 +10,14 @@ const ProductSchema = new mongoose.Schema({
     required: true,
   },
   image: {
-    type: String,
-    required: true,
-  },
-  cloudinaryId: {
-    type: String,
-    required: true,
+    public_id: { 
+      type: String,
+      required: true,
+    },
+     url: {
+      type: String,
+      required: true,
+    }
   },
   quantity: {
     type: Number,
@@ -43,7 +45,6 @@ ProductSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
-    delete returnedObject.__v;
   },
 });
 

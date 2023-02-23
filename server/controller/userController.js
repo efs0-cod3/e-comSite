@@ -49,7 +49,7 @@ exports.createUser = async (req, res) => {
     user.cart = cartCreate(user.id)
 
     const token = jwt.sign({id: user.id}, process.env.SECRET,{
-      expiresIn: 86400
+      expiresIn: "1h"
     })
 
     res.status(201).json({ token });
@@ -62,7 +62,6 @@ exports.createUser = async (req, res) => {
 exports.getUsers = async (req, res) => {
   try {
     const getUsers = await User.find({}).populate('cart');
-    const getCarts= await Cart.find({}).populate('user',{password:0});
     res.status(302).json(getUsers);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -88,7 +87,7 @@ exports.userLogin = async (req,res) => {
     if (!match) { return res.status(400).json({token: "null" , message: "wrong email or password"}) }
 
     const token = jwt.sign({id: foundUser.id}, process.env.SECRET,{
-      expiresIn: 86400
+      expiresIn: "1h"
     })
 
     return res.status(201).json({ token, message: "logged in" });
@@ -96,3 +95,6 @@ exports.userLogin = async (req,res) => {
     res.status(400).json({message: error})
    }
 }
+
+
+exports.userLogOut

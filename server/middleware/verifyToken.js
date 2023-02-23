@@ -11,9 +11,9 @@ const verifyToken = async (req,res,next) =>  {
  
      // si existe decodificamos el token para obtener el id del user
      const decodedToken = jwt.verify(token, process.env.SECRET)
- 
+     req.userId = decodedToken.id
     //  busca el usuario por via del id encriptado en el token
-     const user = await User.findById(decodedToken.id, {password:0})
+     const user = await User.findById(req.userId, {password:0})
      if(!user) return res.status(403).json({message: "No user found"})
      
      next()
