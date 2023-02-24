@@ -26,7 +26,11 @@ const UserSchema = new mongoose.Schema({
   cart: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Cart",
-  }
+  },
+  date: {
+    type: Date,
+    default: new Date(),
+  },
 },
 {
   versionKey: false

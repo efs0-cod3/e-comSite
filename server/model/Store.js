@@ -1,27 +1,35 @@
 const mongoose = require("mongoose");
 
-const StoreSchema = new mongoose.Schema({
-  storename: {
-    type: String,
-    required: true,
-    unique: true
+const StoreSchema = new mongoose.Schema(
+  {
+    storename: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    date: {
+      type: Date,
+      default: new Date(),
+    },
+    products: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+      },
+    ],
   },
-  description: {
-    type: String,
-    required: true,
-  },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-  products: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Product",
-  }],
-},
-{
-  versionKey: false
-});
+  {
+    versionKey: false,
+  }
+);
 
 StoreSchema.set("toJSON", {
   transform: (document, returnedObject) => {
