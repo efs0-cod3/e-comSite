@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const UserSchema = new mongoose.Schema({
+const StoreSchema = new mongoose.Schema({
   storename: {
     type: String,
     required: true,
@@ -14,20 +14,20 @@ const UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  product: {
+  products: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
-  },
+  }],
 },
 {
   versionKey: false
 });
 
-UserSchema.set("toJSON", {
+StoreSchema.set("toJSON", {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
   },
 });
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model("store", StoreSchema);
