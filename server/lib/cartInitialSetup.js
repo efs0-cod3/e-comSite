@@ -8,7 +8,7 @@ const createCart = async (userId) => {
     })
     const user = await User.findById(userId)
     user.cart = newCart.id
-    user.save()
+    await user.save()
 }
 
 module.exports = createCart

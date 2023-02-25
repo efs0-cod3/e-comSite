@@ -1,19 +1,19 @@
-
-const User = require("../model/User");
 const cloudinary = require("cloudinary")
 const Product = require("../model/Product");
+const User = require("../model/User");
+const Store = require("../model/Store")
+
 
 
 exports.postProduct = async (req,res) => {
     const { productname, description, quantity, cost } = req.body
-    const user = await User.findById(req.userId)
-
 
 try {
       // Upload image to cloudinary
       const result = await cloudinary.uploader.upload(req.file.path);
+      const user = await User.findById(req.userId)
 
-  console.log(result);
+
      const product = await Product.create({
         productname,
         image: {
@@ -23,11 +23,17 @@ try {
         description,
         quantity,
         cost,
-        user: user.id,
+        user: req.userId,
+        store: user.storeId
       });
-      console.log(product);
+
+      const store = await Store.findById(user.storeId)
+      store.products = store.products.concat(product.id)
+      await store.save()
+      
+      console.log(product.id);
       console.log("product has been added!");
-      res.status(201).json({message: "Product Created"})
+      res.status(201).json({message: "Product Created and added to store"})
 
     } catch (err) {
       console.log(err);

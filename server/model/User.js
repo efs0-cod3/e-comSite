@@ -19,14 +19,18 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  store: {
+  storeId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Store",
   },
   cart: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Cart",
-  }
+  },
+  date: {
+    type: Date,
+    default: new Date(),
+  },
 },
 {
   versionKey: false

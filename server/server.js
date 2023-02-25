@@ -8,6 +8,7 @@ const connectDB = require("./config/database");
 const bodyParser = require("body-parser");
 const userRoutes = require("./routes/userRoutes")
 const productRoutes = require("./routes/productRoutes");
+const storeRoutes = require("./routes/storeRoutes");
 const fileupload = require("express-fileupload")
 const cloudinary = require("cloudinary").v2;
 
@@ -40,6 +41,7 @@ app.use(morgan("tiny"));
 
 app.use("/api", userRoutes)
 app.use("/product", productRoutes)
+app.use("/store", storeRoutes)
 app.use(fileupload({useTempFiles: true}))
 
 const PORT = process.env.PORT || 3000;
