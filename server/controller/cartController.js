@@ -29,7 +29,7 @@ exports.delProductFromCart = async (req,res) => {
     await cart.updateOne({$pull: {products: req.params.id}});
     cart.count = await cart.countDocuments(cart.products)
     cart.save()
-    res.status(201).json({message: "product added to cart", cart,product})
+    res.status(201).json({message: "product added to cart", cart})
   } catch (error) {
     console.log(error);
     res.status(400).json({error})
