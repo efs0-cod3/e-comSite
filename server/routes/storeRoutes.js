@@ -8,6 +8,8 @@ const verifyToken = require("../middleware/verifyToken")
 router.post("/create",verifyToken, storeController.createStore)
 router.get("/get",verifyToken, storeController.getStore)
 router.delete("/delete",verifyToken, storeController.deleteStore)
+router.get("/getp",verifyToken, storeController.getProductsIds)
+
 
 
 module.exports = router

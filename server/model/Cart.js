@@ -12,7 +12,10 @@ const CartSchema = new mongoose.Schema({
   products: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Product",
-  }]
+  }],
+  count: {
+    type: Number,
+  }
 },{versionKey: false});
 
 
