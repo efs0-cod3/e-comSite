@@ -1,6 +1,7 @@
 const User = require("../model/User");
 const Store = require("../model/Store");
 const Product = require("../model/Product");
+const cloudinary = require("cloudinary")
 
 exports.createStore = async (req, res) => {
   const { storename, description } = req.body;
@@ -48,13 +49,21 @@ exports.getStore = async (req, res) => {
 };
 
 exports.deleteStore = async (req, res) => {
+  // queda implementar como borrar imagenes de cloudinary cuando se borra el store
+  // se puede usar esto cloudinary.v2.api.delete_resources(public_ids) public id seria un array de strings
+
+  // cloudinary.v2.api
+  // .delete_resources(['image1', 'image2'])
+  // .then(result=>console.log(result));
+
   try {
     const user = await User.findById(req.userId);
-    const foundStore = await Store.findById(user.storeId);
-    console.log({ user, foundStore });
+    const foundStore = await Store.findById(user.storeId).populate('products');
+    const productsIdsArray = foundStore.products.map( el => el.image.public_id)
+    await cloudinary.v2.api.delete_resources(productsIdsArray)
     await Product.deleteMany({ store: foundStore.id });
     await Store.deleteOne(user.storeId);
-    user.storeId = undefined
+    user.storeId = undefined;
     await user.save();
 
     res.status(302).json({ message: `store has been deleated!` });
@@ -63,3 +72,12 @@ exports.deleteStore = async (req, res) => {
     res.status(404).json(error);
   }
 };
+
+// test
+exports.getProductsIds = async (req,res) => {
+    const user = await User.findById(req.userId);
+    const foundStore = await Store.findById(user.storeId).populate('products')
+    const p = foundStore.products.map( el => el.image.public_id)
+    console.log(p);
+    res.json({p})
+}

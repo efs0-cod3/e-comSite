@@ -5,12 +5,14 @@ const morgan = require("morgan");
 const cors = require("cors");
 const helmet = require("helmet");
 const connectDB = require("./config/database");
+const cloudinary = require("cloudinary").v2;
+
+//  routes
 const bodyParser = require("body-parser");
 const userRoutes = require("./routes/userRoutes")
 const productRoutes = require("./routes/productRoutes");
 const storeRoutes = require("./routes/storeRoutes");
-const fileupload = require("express-fileupload")
-const cloudinary = require("cloudinary").v2;
+const cartRoutes = require("./routes/cartRoutes");
 
 
 
@@ -42,7 +44,7 @@ app.use(morgan("tiny"));
 app.use("/api", userRoutes)
 app.use("/product", productRoutes)
 app.use("/store", storeRoutes)
-app.use(fileupload({useTempFiles: true}))
+app.use("/cart", cartRoutes)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on PORT ${PORT}!`));
