@@ -96,5 +96,3 @@ exports.userLogin = async (req,res) => {
    }
 }
 
-
-exports.userLogOut

@@ -22,7 +22,6 @@ function Login() {
       )
 
       setUser(user);
-      console.log({user});
       setEmail("");
       setPassword("");
     } catch (e) {

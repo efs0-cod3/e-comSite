@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function LoginForm({
   onSubmit,
@@ -30,7 +31,10 @@ export default function LoginForm({
           onChange={handlePwdChange}
         />
       </div>
-      <button>login</button>
+      <div>
+        <button>Log in</button>
+        <div>Need an account? <Link to="/signup">Sign up</Link></div>
+      </div>
     </form>
   );
 }
