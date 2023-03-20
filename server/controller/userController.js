@@ -90,11 +90,9 @@ exports.userLogin = async (req,res) => {
       expiresIn: "1h"
     })
 
-    return res.status(201).json({ token, message: "logged in" });
+    return res.status(201).json({ token, name: foundUser.name, username: foundUser.username });
    } catch (error) {
     res.status(400).json({message: error})
    }
 }
 
-
-exports.userLogOut

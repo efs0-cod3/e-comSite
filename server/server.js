@@ -40,7 +40,7 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 app.use(cors());
 app.use(morgan("tiny"));
-
+app.options('*', cors())
 app.use("/api", userRoutes)
 app.use("/product", productRoutes)
 app.use("/store", storeRoutes)

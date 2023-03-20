@@ -7,6 +7,6 @@ const verifyToken = require("../middleware/verifyToken")
 
 router.post("/create",verifyToken,upload.single("image"), productController.postProduct)
 router.delete("/remove/:id",verifyToken, productController.deleteProduct)
-router.get("/get",verifyToken, productController.getProducts)
+router.get("/get", productController.getProducts)
 
 module.exports = router
