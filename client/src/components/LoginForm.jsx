@@ -7,6 +7,7 @@ export default function LoginForm({
   password,
   handlePwdChange,
   handleEmailChange,
+  redu
 }) {
   return (
     <form onSubmit={onSubmit}>

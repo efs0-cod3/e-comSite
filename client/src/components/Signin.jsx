@@ -1,9 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import signupService from "../services/signup";
+import { useDispatch } from "react-redux";
+import { signedUser } from "../redux/features/userSlice";
 
 const Signup = ({}) => {
-
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -12,54 +14,48 @@ const Signup = ({}) => {
   const [user, setUser] = useState(null);
   const [errorMsj, setErrorMsj] = useState(null);
 
-
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    try {
-      
-      
-      const user = await signupService.signup({
-          name,email,username,pwd
-        })
-      
+    e.preventDefault();
 
-      window.localStorage.setItem(
-        "loggedUser", JSON.stringify(user)
-      )
-      
-      setUser(user)
-        console.log({user});
+    try {
+      const user = await signupService.signup({
+        name,
+        email,
+        username,
+        pwd,
+      });
+
+      window.localStorage.setItem("loggedUser", JSON.stringify(user));
+
+      setUser(user);
+      dispatch(signedUser(user));
     } catch (error) {
       console.log(error.response.data);
       setErrorMsj("all fields must be completed");
       setTimeout(() => {
-        setErrorMsj(null)
+        setErrorMsj(null);
       }, 1000);
     }
-  }
+  };
 
   const handleNameChange = (e) => {
-      setName(e.target.value)
-  }
+    setName(e.target.value);
+  };
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value)
+    setEmail(e.target.value);
+  };
 
-  } 
-  
   const handleConfPwdChange = (e) => {
-    setConfPwd(e.target.value)
-    
-  } 
+    setConfPwd(e.target.value);
+  };
   const handleUsernameChange = (e) => {
-    setUsername(e.target.value)
-    
-  } 
+    setUsername(e.target.value);
+  };
   const handlePwdChange = (e) => {
-    setPwd(e.target.value)
-    
-  }
-  
+    setPwd(e.target.value);
+  };
+
   return (
     <form onSubmit={handleSubmit} className="signupForm">
       <div>

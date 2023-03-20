@@ -1,39 +1,43 @@
 import React, { useEffect, useState } from "react";
 import cartService from "../services/cart";
 import CartProduct from "./CartProduct";
+import { useSelector, useDispatch } from "react-redux";
+import {deleteCartProduct, getCartProducts} from "../redux/features/userSlice"
+
+
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
-
+  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
+  const {token, cartProducts} = useSelector(state => state.userReducer)
 
   useEffect(() => {
-    let user = window.localStorage.getItem("loggedUser")
-    user = JSON.parse(user)
-    cartService.setToken(user.token);
+    cartService.setToken(token);
   }, []);
   
+  // const [cartItems, setCartItems] = useState([])
+  
   useEffect(() => {
-    cartService.getCartProducts().then((item) => {
-      const { cart } = item;
-      setCartItems(cart.products);
-    });
+    cartService.getCartProducts().then((cart) => {
+          dispatch(getCartProducts(cart.cart.products))
+          setLoading(false)
+    })
+    
   }, []);
 
 // app component not updating after deleting
 
   const handleDeleteProductFromCart = (id) => {
-    // let user = window.localStorage.getItem("loggedUser");
-    // user = JSON.parse(user);
-    // cartService.setToken(user.token)
     cartService.delCartProduct(id);
-    setCartItems({ ...cartItems });
-    console.log(cartItems);
+    dispatch(deleteCartProduct(id))
   };
 
   return (
     <div>
-      {cartItems.length > 0 ? (
-        cartItems.map((product) => (
+      {loading && token ? 
+      <h1>Loading...</h1> : 
+      cartProducts.length > 0 ? (
+        cartProducts?.map((product) => (
           <CartProduct
             key={product.id}
             pName={product.productname}
@@ -44,8 +48,9 @@ const Cart = () => {
           />
         ))
       ) : (
-        <h2>No items in your cart</h2>
+        <h2>Your Ecom Cart is empty</h2>
       )}
+    
     </div>
   );
 };
