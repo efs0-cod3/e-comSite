@@ -1,24 +1,35 @@
-import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router";
+
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
+import { useSelector } from "react-redux";
+
+// components
 import Navbar from "./components/Navbar";
 import Login from "./components/Login"
 import Home from "./components/Home"
 import Cart from "./components/Cart";
-import Signup from "./components/Signup";
+import Signin from "./components/Signin";
+import Account from "./components/Account";
+import CreateAccountCart from "./components/CreateAccountCart";
 
 function App() {
+  const {token} = useSelector(state => state.userReducer)
+
   
 
   return (
     <div className="App">
+     <BrowserRouter>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/login" element={<Login />}/>
-        <Route path="/signup" element={<Signup />}/>
-        <Route path="/cart" element={<Cart />}/>
+        <Route path="/signin" element={<Signin />}/>
+        <Route path="/cart" element={token ? <Cart /> : <CreateAccountCart />}/>
+        <Route path="/account" element={token ? <Account /> : <Login />}/>
+        <Route path="/logout" element={<Navigate to={"/"}/>}/>
       </Routes>
+     </BrowserRouter>
     </div>
   );
 }
