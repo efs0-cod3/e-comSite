@@ -1,0 +1,82 @@
+.nav_container {
+  display: grid;
+  justify-content: space-between;
+  grid-template:
+    "logo link cartLink"
+    "searchForm searchForm searchForm";
+    padding: 10px 20px;
+}
+
+.nav_logo {
+  grid-area: logo;
+  color: black;
+  font-weight: bold;
+}
+
+.nav_search-form {
+  grid-area: searchForm;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 5px;
+
+
+}
+
+.nav-fill {
+    width: 80%;
+}
+
+.formInput{
+ width: 100%;
+}
+
+.formButton_container {
+    width: 20%;
+}
+.formButton {
+    width: 100%;
+}
+
+.linksIfUser,
+.linksIfNoUser {
+  grid-area: link;
+}
+
+.lIU_account {
+  margin: 0 5px;
+  color: black;
+}
+
+.lIU_Lout{
+  color: black;
+    margin: 0 5px;
+}
+
+.login {
+    margin: 0 5px;
+  color: black;
+
+}
+.signin {
+  color: black;
+    margin: 0 5px;
+}
+
+.cartContainer {
+  grid-area: cartLink;
+}
+.cartLinkk{
+  color: black;
+}
+
+@media screen and (min-width: 600px) {
+    .nav_container {
+        display: grid;
+        justify-content: space-between;
+        grid-template:
+          "logo searchForm link cartLink";
+          padding: 10px 20px;
+      }
+    
+}

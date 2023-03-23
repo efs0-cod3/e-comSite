@@ -10,8 +10,8 @@ export default function LoginForm({
   redu
 }) {
   return (
-    <form onSubmit={onSubmit}>
-      <div>
+    <form className="login_form" onSubmit={onSubmit}>
+      <div className="form_input">
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -22,7 +22,7 @@ export default function LoginForm({
         />
       </div>
 
-      <div>
+      <div className="form_input">
         <label htmlFor="password">Password:</label>
         <input
           type="password"
@@ -32,9 +32,9 @@ export default function LoginForm({
           onChange={handlePwdChange}
         />
       </div>
-      <div>
+      <div className="form_button_container">
         <button>Log in</button>
-        <div>Need an account? <Link to="/signup">Sign up</Link></div>
+        <p>Need an account? <Link to="/signin">Sign up</Link></p>
       </div>
     </form>
   );

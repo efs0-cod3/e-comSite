@@ -1,0 +1,29 @@
+.products_container{
+    display: flex;
+    flex-wrap: wrap;
+}
+.product_info-container {
+    border: solid 1px;
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    border-radius: 10px;
+    text-align: center;
+    width: min(40%,50%,350px);
+
+  }
+  
+  .product_img {
+    width: clamp(40%, 100%, 350px);
+    border-radius: 10px 10px 0 0;
+  }
+  .product_description {
+    width: clamp(40%, 100%, 350px);
+
+  }
+
+  h3,
+  p {
+    margin: 0;
+    padding: 0;
+  }

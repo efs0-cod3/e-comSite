@@ -1,0 +1,32 @@
+.signin_form_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(0, 170, 255);
+}
+
+.signupForm {
+    width: 100%;
+    padding: 40px;
+}
+
+.signupForm label {
+  font-weight: bold;
+}
+
+.signin_form_input {
+  margin-bottom: 10px;
+}
+
+.signin_form_input input {
+  width: 90%;
+  padding: 8px;
+  border-radius: 6px;
+  border: none;
+  margin-bottom: 10px;
+}
+
+.form_button_container p {
+  color: lightgrey;
+}

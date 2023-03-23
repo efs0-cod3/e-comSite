@@ -8,10 +8,10 @@ const cartCreate = require("../lib/cartInitialSetup")
 exports.createUser = async (req, res) => {
   const { name, username, email, pwd } = req.body;
 
-  if ((!name, !username || !email || !pwd))
-    res
-      .status(400)
-      .json({ message: "name, username, email & password are required" });
+  
+  if ((!name, !username || !email || !pwd)){
+   return res.status(401).json({ message: "all fields are required" });
+  }
 
   // validates if email is in correct format and if it is, if already exist in database.
   let duplicatedEmail;
@@ -35,7 +35,6 @@ exports.createUser = async (req, res) => {
       .status(409)
       .json({ message: "Password must have more than 8 characters" }); //conflict
   }
-
   try {
     //encrypt pawd
     const hashedpwd = await bcrypt.hash(pwd, 10);
@@ -52,7 +51,7 @@ exports.createUser = async (req, res) => {
       expiresIn: "1h"
     })
 
-    res.status(201).json({ token });
+    res.status(201).json({ token,username: user.username, name: user.name  });
 
   } catch (error) {
     res.status(500).json({ message: error.message });

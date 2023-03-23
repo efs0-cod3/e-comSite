@@ -22,3 +22,13 @@ This is created to show my knowlege and tought process when using these technolo
 | Multer       | Middleware for handling multipart/form-data, which is primarily used for uploading files |
 | Nodemon      | Monitors our server to reinitialize after each change |
 | Validator    | Validates each input that we set to |
+
+## Clinet-side Dependencies
+
+|  react    |  Js frontend Library      |
+|  @reduxjs/toolkit   | State management throug the app |
+|  react-redux   | State management throug the app |
+|  redux-devtools-extension   | Manage redux from browser |
+|  axios   |  |
+|  react-router-dom   |  |
+|  react-router  |  |

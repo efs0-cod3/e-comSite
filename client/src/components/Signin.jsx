@@ -1,11 +1,14 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import signupService from "../services/signup";
 import { useDispatch } from "react-redux";
 import { signedUser } from "../redux/features/userSlice";
+import { useNavigate } from "react-router-dom";
+import "../styles/singin.css"
 
 const Signup = ({}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -26,12 +29,12 @@ const Signup = ({}) => {
       });
 
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
-
       setUser(user);
       dispatch(signedUser(user));
+      if(user)navigate("/")
     } catch (error) {
-      console.log(error.response.data);
-      setErrorMsj("all fields must be completed");
+      console.log(error.response.data.message);
+      setErrorMsj(error.response.data.message);
       setTimeout(() => {
         setErrorMsj(null);
       }, 1000);
@@ -57,8 +60,10 @@ const Signup = ({}) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="signupForm">
-      <div>
+    <div className="signin_form_container">
+      <form onSubmit={handleSubmit} className="signupForm">
+      {errorMsj}
+      <div className="signin_form_input">
         <label htmlFor="name">Name:</label>
         <input
           type="text"
@@ -69,7 +74,7 @@ const Signup = ({}) => {
         />
       </div>
 
-      <div>
+      <div className="signin_form_input">
         <label htmlFor="username">Username:</label>
         <input
           type="text"
@@ -80,7 +85,7 @@ const Signup = ({}) => {
         />
       </div>
 
-      <div>
+      <div className="signin_form_input">
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -91,7 +96,7 @@ const Signup = ({}) => {
         />
       </div>
 
-      <div>
+      <div className="signin_form_input">
         <label htmlFor="password">Password:</label>
         <input
           type="password"
@@ -102,7 +107,7 @@ const Signup = ({}) => {
         />
       </div>
 
-      <div>
+      <div className="signin_form_input"> 
         <label htmlFor="passwordConfirmation">Confirm password:</label>
         <input
           type="password"
@@ -113,13 +118,14 @@ const Signup = ({}) => {
         />
       </div>
 
-      <div>
+      <div className="form_button_container">
         <button>Sign up</button>
-        <div>
+        <p>
           Already have an account? <Link to="/login">Log in</Link>
-        </div>
+        </p>
       </div>
     </form>
+    </div>
   );
 };
 

@@ -1,0 +1,31 @@
+/* cart product */
+.cart_product_container {
+    position: relative;
+    border: solid 1px;
+    display: flex;
+    flex-direction: column;
+    max-width: fit-content;
+    margin: 10px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .cart_product_container img {
+    width: 250px;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .del_product {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    opacity: 0.9;
+    width: 25px;
+    background-color: lightgray;
+    color: black;
+  }
+  
+  .del_product:hover {
+    opacity: 1;
+  }
+  

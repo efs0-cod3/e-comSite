@@ -4,10 +4,12 @@ import LoginForm from "./LoginForm";
 import loginService from "../services/login";
 import { useDispatch } from "react-redux";
 import { signedUser } from "../redux/features/userSlice";
+import { useNavigate } from "react-router-dom";
+import "../styles/login.css"
 
 function Login() {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
@@ -28,6 +30,7 @@ function Login() {
 
       setEmail("");
       setPassword("");
+      if(user){navigate("/")}
     } catch (e) {
       console.log(e);
       setErrorMsj("Wrong credentials");
@@ -46,7 +49,7 @@ function Login() {
   };
 
   return (
-    <div>
+    <div className="form_container">
       <Notification message={errorMsj} />
       <LoginForm
         onSubmit={handleLogin}
