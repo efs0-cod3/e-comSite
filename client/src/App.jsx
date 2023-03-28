@@ -11,6 +11,7 @@ import Cart from "./components/Cart";
 import Signin from "./components/Signin";
 import Account from "./components/Account";
 import CreateAccountCart from "./components/CreateAccountCart";
+import CreateStore from "./components/CreateStore";
 
 function App() {
   const {token} = useSelector(state => state.userReducer)
@@ -28,6 +29,7 @@ function App() {
         <Route path="/cart" element={token ? <Cart /> : <CreateAccountCart />}/>
         <Route path="/account" element={token ? <Account /> : <Login />}/>
         <Route path="/logout" element={<Navigate to={"/"}/>}/>
+        <Route path="/createstore" element={<CreateStore />}/>
       </Routes>
      </BrowserRouter>
     </div>

@@ -40,6 +40,7 @@
 
 .linksIfUser,
 .linksIfNoUser {
+  display: flex;
   grid-area: link;
 }
 
@@ -68,6 +69,19 @@
 }
 .cartLinkk{
   color: black;
+}
+
+.createStore {
+  color: black;
+  position: absolute;
+  top: 15px;
+width: 100px;
+left: 5px;
+}
+
+.accountLinks {
+  display: flex;
+  position: relative;
 }
 
 @media screen and (min-width: 600px) {

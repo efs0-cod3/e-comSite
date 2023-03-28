@@ -1,17 +1,27 @@
-import React from "react";
+import React, {useState} from "react";
 import "../styles/navbar.css"
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../redux/features/userSlice";
 
-function Navbar({ search }) {
-  const { username } = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
+import CreateStore from "./CreateStore";
 
+function Navbar({ search }) {
+  const user = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
+  const [isShown, setIsShown] = useState(false)
 
   const handleLogout = () => {
     dispatch(logOut());
   };
+
+  const showAccountOptions = () =>{
+    setIsShown(true)
+  }
+  
+  const hideAccountOpt = () =>{
+    setIsShown(false)
+  }
 
   return (
     <nav className="nav_container">
@@ -32,9 +42,12 @@ function Navbar({ search }) {
         </div>
       </form>
 
-      {username ? (
+      {user.username ? (
         <div className="linksIfUser">
-          <Link className="lIU_account" to={"/account"}>Account</Link>
+          <div className="accountLinks" onMouseOver={showAccountOptions} onMouseOut={hideAccountOpt}>
+          <Link className="lIU_account"  to={"/account"}>Account</Link>
+          {(isShown) && user.store ? <Link className="createStore" to={"/"}>Store</Link> : <Link className="createStore" to={"/createstore"}>Create store</Link>}
+          </div>
           <Link className="lIU_Lout" onClick={handleLogout} to={"/logout"}>Log out</Link>
         </div>
       ) : (
